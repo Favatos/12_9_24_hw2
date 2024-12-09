@@ -14,15 +14,12 @@ using System.Windows.Shapes;
 
 namespace _12_9_24_hw2
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private static byte[] buffer = new byte[4096];
         private const int Threads = 4;
 
-        private static readonly CountdownEvent remaining = new(Threads);
+        private static readonly Mutex mutex = new Mutex(false);
         public MainWindow()
         {
             InitializeComponent();
@@ -45,27 +42,32 @@ namespace _12_9_24_hw2
 
             for (int i = 0; i < Threads; i++)
             {
-                ThreadPool.QueueUserWorkItem(param => Copy(filesCopy[i], filesWrite[i], progresses[i]));
+                int icopy = i;
+                ThreadPool.QueueUserWorkItem(param => Copy(filesCopy[icopy], filesWrite[icopy], progresses[icopy]));
             }
-            remaining.Wait();
         }
 
         private static void Copy(string path1, string path2, ProgressBar p)
         {
             long copied = 0, length = new FileInfo(path1).Length;
-            using (Stream writer = File.Create(path2)) {
-                using (Stream reader = File.OpenRead(path1))
+            try
+            {
+                mutex.WaitOne();
+                using (Stream writer = File.Create(path2))
                 {
-                    while (copied < length)
+                    using (Stream reader = File.OpenRead(path1))
                     {
-                        int read = reader.Read(buffer, 0, buffer.Length);
-			            writer.Write(buffer, 0, read);
-                        copied += read;
-                        p.Value = 100 * copied / length;
+                        while (copied < length)
+                        {
+                            int read = reader.Read(buffer, 0, buffer.Length);
+                            writer.Write(buffer, 0, read);
+                            copied += read;
+                            p.Dispatcher.Invoke(() => p.Value = 100 * copied / length);
+                        }
                     }
                 }
             }
-            remaining.Signal();
+            finally { mutex.ReleaseMutex(); }
         }
     }
 }

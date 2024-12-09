@@ -23,9 +23,9 @@
         <TextBlock Grid.Row="2" VerticalAlignment="Center">File №3</TextBlock>
         <TextBlock Grid.Row="3" VerticalAlignment="Center">File №4</TextBlock>
 
-        <ProgressBar x:Name="p1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Height="30"/>
-        <ProgressBar x:Name="p2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Height="30"/>
-        <ProgressBar x:Name="p3" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Height="30"/>
-        <ProgressBar x:Name="p4" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Height="30"/>
+        <ProgressBar x:Name="p1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="30"/>
+        <ProgressBar x:Name="p2" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="30"/>
+        <ProgressBar x:Name="p3" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="30"/>
+        <ProgressBar x:Name="p4" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="30"/>
     </Grid>
 </Window>
