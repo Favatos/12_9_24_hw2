@@ -1,16 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace _12_9_24_hw2
 {
@@ -62,7 +52,7 @@ namespace _12_9_24_hw2
                             int read = reader.Read(buffer, 0, buffer.Length);
                             writer.Write(buffer, 0, read);
                             copied += read;
-                            p.Dispatcher.Invoke(() => p.Value = 100 * copied / length);
+                            p.Dispatcher.Invoke(() => p.Value = (float) 100 * copied / length);
                         }
                     }
                 }
